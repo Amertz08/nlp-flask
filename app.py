@@ -1,5 +1,5 @@
 import pickle
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import TextAreaField, SubmitField
@@ -36,7 +36,7 @@ def predict():
             clf = joblib.load(model)
 
         # Make prediction
-        data = [request.form["message"]]
+        data = [form.message.data]
         vect = cv.transform(data).toarray()
         my_prediction = clf.predict(vect)
         return render_template("result.html", prediction=my_prediction)
